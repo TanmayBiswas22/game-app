@@ -13,8 +13,25 @@ const ChatRoom = (props) => {
   };
 
   const handleSendMessage = () => {
-    sendMessage(newMessage);
+    const randomNumber = Math.floor(Math.random() * 99) + 9;
+    sendMessage(randomNumber);
     setNewMessage("");
+  };
+
+  const createNewGame = () => {
+    const randomNumber = Math.floor(Math.random() * 99) + 9;
+  
+    // return {
+    //   id: uuidv4(),
+    //   playerOne: user,
+    //   playerTwo: isSingleUser ? PLAYER : null,
+    //   value: randomNumber,
+    //   startingNumber: randomNumber,
+    //   turn: isSingleUser ? user.id : null,
+    //   attemps: [],
+    //   winner: null,
+    // };
+    //return randomNumber;
   };
 
   return (
@@ -34,14 +51,15 @@ const ChatRoom = (props) => {
           ))}
         </ol>
       </div>
-      <textarea
+      {/* <textarea
         value={newMessage}
         onChange={handleNewMessageChange}
         placeholder="Write message..."
         className="new-message-input-field"
-      />
+      /> */}
+      {/* {createNewGame()} */}
       <button onClick={handleSendMessage} className="send-message-button">
-        Send
+        Start
       </button>
     </div>
   );
