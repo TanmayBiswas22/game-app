@@ -6,7 +6,7 @@
     bottom: 0;
     display: flex;
     flex-direction: column;
-    margin: 16px;
+    margin: 48px;
 }
 
 .room-name {
@@ -19,6 +19,7 @@
     overflow: auto;
     border: 1px solid black;
     border-radius: 7px 7px 0 0;
+    background-color: aliceblue;
 }
 
 .messages-list {
@@ -35,7 +36,7 @@
 }
 
 .message-item {
-    width: 55%;
+    width: 25%;
     margin: 8px;
     padding: 12px 8px;
     word-break: break-word;
@@ -44,15 +45,60 @@
 }
 
 .my-message {
-    background-color: rgb(0, 132, 255);
+    display: flex;
+    flex-direction: column;
+    /* background-color: rgb(0, 132, 255); */
     margin-left: auto;
+    margin-right: 10%;
+    color: black;
+    align-items: flex-end;
+}
+.my-message-item{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-right: 10%;
+}
+.received-message-item{
+    margin-left: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.avatar{
+    vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }
 
+.attempt-number{
+    background-color: rgb(0, 132, 255);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.attempt-text{
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
 .received-message {
-    background-color: #3f4042;
+    display: flex;
+    flex-direction: column;
+    /* background-color: rgb(0, 132, 255); */
     margin-right: auto;
+    margin-left: 10%;
+    color: black;
+    align-items: flex-start;
 }
-
 .button-container{
     display: flex;
     justify-content: space-evenly;
@@ -73,3 +119,31 @@
 .messages-container, .new-message-input-field, .send-message-button {
     border-color: #9a9a9a;
 }
+.game-end-image{
+    height: 100px;
+    width: 100px;
+}
+.overlay {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed; /* Sit on top of the page content */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  }
+  .start-game-button{
+    height: 50px;
+    width: 150px;
+    border-radius: 50px;
+    border: none;
+    background-color: rgb(0, 132, 255);
+    color: white;
+    font-size: 16px;
+  }

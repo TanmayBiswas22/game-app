@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import socketIOClient from "socket.io-client";
 
-const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
+const NEW_TURN = "turn";
 const SOCKET_SERVER_URL = "http://localhost:4000";
 const startingNumber = 19;
 const useChat = (roomId) => {
@@ -14,14 +14,53 @@ const useChat = (roomId) => {
       query: { roomId },
     });
 
-    socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, (data) => {
+    socketRef.current.on("game", (data) => {
       // setIsGameStarted(true);
+      console.log('incoming data on game start1----?', data);
+      const incomingData = {
+        ...data
+      };
+      setGameData(incomingData);
+    });
+
+    socketRef.current.on("won", (data) => {
+      console.log('game win data ', data);
+      data.attemps.map((item) => {
+        item.ownedByCurrentUser = item.user === socketRef.current.id
+      })
+
       const incomingData = {
         ...data,
-        ownedByCurrentUser: data.senderId === socketRef.current.id
+        winner:true,
+        looser:false
       };
-      setGameData((data) => [...data, incomingData]);
+      setGameData(incomingData);
     });
+    socketRef.current.on("lost", (data) => {
+      console.log('game lost data ', data);
+      data.attemps.map((item) => {
+        item.ownedByCurrentUser = item.user === socketRef.current.id
+      })
+
+      const incomingData = {
+        ...data,
+        winner:false,
+        looser:true
+      };
+      setGameData(incomingData);
+    });
+    socketRef.current.on(NEW_TURN, (data) => {
+      console.log('turn  data ', data);
+      data.attemps.map((item) => {
+        item.ownedByCurrentUser = item.user === socketRef.current.id
+      })
+      const incomingData = {
+        ...data
+      };
+      console.log('incoming new message', incomingData)
+      setGameData(incomingData);
+    });
+
     console.log('socketref', socketRef);
     console.log('gameData inside listenre', gameData);
     return () => {
@@ -29,39 +68,16 @@ const useChat = (roomId) => {
     };
   }, [roomId]);
 
-  const calculateValue = (value, number) => {
-    const newValue =  Math.round((value + number) / 3);
-    const isDivisible = (value + number) % 3 === 0;
 
-    return {
-      value: newValue,
-      isDivisible,
-    };
-  };
 
-  const sendGameData = (newData) => {
-    let gameWinner = null;
-    //const randomNumber = Math.floor(Math.random() * 99) + 9;
-    const newValue = calculateValue(newData.selectedValue, newData.value ? newData.value : startingNumber);
-    if (newValue.value === 1) {
-      gameWinner = (newData.senderId === socketRef.current.id) ? 'A WON':'B WON'
-    } else if(!newValue.isDivisible) {
-      gameWinner = "2"
-    }
-    console.log('socketref', socketRef);
-    console.log('newData', newData);
-    socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {
-      value: newValue.value,
-      senderId: socketRef.current.id,
-      winner:gameWinner,
-      startingNumber:startingNumber,
-      isGameStarted:true
-      //text: `[(${attempt.number} + ${game.value} / 3)] = ${newValue.value}`,
+  const sendGameData = (selectedOption) => {
+    socketRef.current.emit(NEW_TURN, {
+      selectedOption: selectedOption,
+      gameData: gameData
     });
-    
   };
 
-  return {gameData, sendGameData };
+  return { gameData, sendGameData };
 };
 
 export default useChat;

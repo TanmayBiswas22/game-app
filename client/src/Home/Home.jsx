@@ -12,14 +12,7 @@ const Home = () => {
 
   return (
     <div className="home-container">
-      <input
-        type="text"
-        placeholder="Room"
-        value={roomName}
-        onChange={handleRoomNameChange}
-        className="text-input-field"
-      />
-      <Link to={`/${roomName}`} className="enter-room-button">
+      <Link to={`/newgame`} className="enter-room-button">
         Join room
       </Link>
     </div>
