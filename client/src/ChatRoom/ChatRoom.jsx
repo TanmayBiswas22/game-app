@@ -1,56 +1,36 @@
-import React, { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 
 import "./ChatRoom.css";
-import useChat from "../useChat";
-import bot1 from "../assets/bot1.png";
+import useChat from "../useGame";
+import bot1 from "../assets/bot1.jpg";
 import bot2 from "../assets/bot2.png";
-import win_cup from "../assets/win_cup.png";
-import balloons from "../assets/balloons.png";
+import win_cup from "../assets/win_cup2.gif";
+import lose from "../assets/lose.gif";
 const ChatRoom = (props) => {
-  //const { roomId } = props.match.params;
   const { gameData, sendGameData } = useChat('');
-  const [ isButtonDisabled, setButtonDisabled ] = useState(false);
-  useEffect(() => {
-    //let lastAttemptByCurrentUser = gameData.attemps && gameData.attemps[gameData.attemps.length -1]?.ownedByCurrentUser ;
-    let actionButtons =  document.getElementsByClassName("send-message-button");
-    for (let item of actionButtons) {
-      item.disabled = gameData.attemps && gameData.attemps[gameData.attemps.length -1]?.ownedByCurrentUser;
-  }
-    // if(gameData.attemps && gameData.attemps[gameData.attemps.length -1]?.ownedByCurrentUser){
-    //   sendGameData([-1,0,1][Math.floor(Math.random() * 3)]);
-    // }
-  }, [gameData]); // Only re-run the effect if count changes
-
-  const handleSendMessage = (selectedOption) => {
-    let actionButtons =  document.getElementsByClassName("send-message-button");
-    for (let item of actionButtons) {
-      item.disabled = true;
-      item.style.backgroundColor = 'Grey';
-            
-    setTimeout(function(){
-      item.disabled = false;
-      item.style.backgroundColor = '#31a24c';
-      // console.log('gamedata in settimeout',gameData)
-    //   if(gameData.attemps && gameData.attemps[gameData.attemps.length -1]?.ownedByCurrentUser){
-    //   sendGameData(null,true);
-    // }
-    // sendGameData(null,true);
-    },5000);
-  }
+  let ownedByCurrentUser = false;
+  const handleSendOption = (selectedOption) => {
     sendGameData(selectedOption);
   };
 
-  // console.log('render  data', gameData);
+  useEffect(() => {
+    var element = document.getElementById('game-container');
+    element.scrollTop = element.scrollHeight;
+  }, [gameData]);
+  if (gameData.attemps && gameData.attemps.length > 0) {
+    ownedByCurrentUser = gameData.attemps[gameData.attemps?.length - 1]?.ownedByCurrentUser;
+  }
+
   return (
-    <div className="chat-room-container">
-      <h1 className="room-name">Starting Number: {gameData.startingNumber}</h1>
-      <div className="messages-container">
-        <ol className="messages-list">
-          {/* Starting Number:{messages[0].startingNumber} */}
+    <div className="game-room-container">
+      <div className="header"> <h3>Game App</h3></div>
+      <h3 className="game-name">Starting Number: {gameData.startingNumber}</h3>
+      <div id="game-container" className="game-container">
+        <ol className="game-data-list">
           {gameData.attemps && gameData.attemps.map((data, i) => (
             <div
               key={i}
-              className={`message-item ${data.ownedByCurrentUser ? "my-message" : "received-message"
+              className={`game-item ${data.ownedByCurrentUser ? "my-game" : "received-game"
                 }`}
             >
               <div>
@@ -58,7 +38,7 @@ const ChatRoom = (props) => {
                   <img src={bot1} alt="Avatar" className="avatar" /> :
                   <img src={bot2} alt="Avatar" className="avatar" />}
               </div>
-              <div className={`${data.ownedByCurrentUser ? "my-message-item" : "received-message-item"
+              <div className={`${data.ownedByCurrentUser ? "my-game-item" : "received-game-item"
                 }`}>
                 <div className="attempt-number">
                   {data.number}
@@ -77,9 +57,8 @@ const ChatRoom = (props) => {
           {gameData.winner ?
             <>
               <div className="overlay">
-                <img src={win_cup} alt="winner" className="game-end-image" />
-                <h2>You Won</h2>
-                <button className="start-game-button" onClick={() => window.location.reload()}>New Game</button>
+                <img src={win_cup} alt="winner" className="game-won-image" />
+                <button className="start-newgame-button" onClick={() => window.location.reload()}>New Game</button>
               </div>
 
             </>
@@ -87,9 +66,8 @@ const ChatRoom = (props) => {
           {gameData.looser ?
             <>
               <div className="overlay">
-                <img src={balloons} alt="looser" className="game-end-image" />
-                <h2>You Lose</h2>
-                <button className="start-game-button" onClick={() => window.location.reload()}>New Game</button>
+                <img src={lose} alt="looser" className="game-lose-image" />
+                <button className="start-newgame-button" onClick={() => window.location.reload()}>New Game</button>
               </div>
 
             </>
@@ -97,13 +75,13 @@ const ChatRoom = (props) => {
         </ol>
       </div>
       <div className="button-container">
-        <button  onClick={() => handleSendMessage(-1)} className="send-message-button">
+        <button disabled={ownedByCurrentUser} onClick={() => handleSendOption(-1)} className={ownedByCurrentUser ? 'send-option-button-disabled' : 'send-option-button'}>
           -1
       </button>
-        <button  onClick={() => handleSendMessage(0)} className="send-message-button">
+        <button disabled={ownedByCurrentUser} onClick={() => handleSendOption(0)} className={ownedByCurrentUser ? 'send-option-button-disabled' : 'send-option-button'}>
           0
       </button>
-        <button  onClick={() => handleSendMessage(1)} className="send-message-button">
+        <button disabled={ownedByCurrentUser} onClick={() => handleSendOption(1)} className={ownedByCurrentUser ? 'send-option-button-disabled' : 'send-option-button'}>
           1
       </button>
       </div>

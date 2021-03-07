@@ -1,4 +1,4 @@
-.chat-room-container {
+.game-room-container {
     position: fixed;
     left: 0;
     right: 0;
@@ -6,37 +6,30 @@
     bottom: 0;
     display: flex;
     flex-direction: column;
-    margin: 48px;
+    margin: 20px;
 }
 
-.room-name {
+.game-name {
     margin-top: 0;
 }
 
-.messages-container {
-    flex: 1;
+.game-container {
+    flex: 1 1;
     min-height: 100px;
     overflow: auto;
-    border: 1px solid black;
-    border-radius: 7px 7px 0 0;
+    /* border: 1px solid black; */
+    /* border-radius: 7px 7px 0 0; */
     background-color: aliceblue;
+    margin-bottom: 10px;
 }
 
-.messages-list {
+.game-data-list {
     list-style-type: none;
     padding: 0;
 }
 
-.new-message-input-field {
-    height: 200px;
-    max-height: 50%;
-    font-size: 20px;
-    padding: 8px 12px;
-    resize: none;
-}
-
-.message-item {
-    width: 25%;
+.game-item {
+    /* width: 25%; */
     margin: 8px;
     padding: 12px 8px;
     word-break: break-word;
@@ -44,7 +37,7 @@
     color: white;
 }
 
-.my-message {
+.my-game {
     display: flex;
     flex-direction: column;
     /* background-color: rgb(0, 132, 255); */
@@ -53,14 +46,14 @@
     color: black;
     align-items: flex-end;
 }
-.my-message-item{
+.my-game-item{
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    margin-right: 10%;
+    margin-right: 3%;
 }
-.received-message-item{
-    margin-left: 10%;
+.received-game-item{
+    margin-left: 3%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -90,7 +83,7 @@
     padding: 5px;
     margin-bottom: 10px;
 }
-.received-message {
+.received-game {
     display: flex;
     flex-direction: column;
     /* background-color: rgb(0, 132, 255); */
@@ -101,14 +94,28 @@
 }
 .button-container{
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
+    background-color: cornflowerblue;
 }
 
-.send-message-button {
+.send-option-button {
+    margin: 10px;
     font-size: 28px;
     font-weight: 600;
     color: white;
-    background: #31a24c;
+    background: black;
+    /* padding: 24px 12px; */
+    border: none;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+}
+.send-option-button-disabled {
+    margin: 10px;
+    font-size: 28px;
+    font-weight: 600;
+    color: white;
+    background: grey;
     /* padding: 24px 12px; */
     border: none;
     border-radius: 50%;
@@ -116,12 +123,11 @@
     width: 50px;
 }
 
-.messages-container, .new-message-input-field, .send-message-button {
-    border-color: #9a9a9a;
+
+.game-won-image{
 }
-.game-end-image{
-    height: 100px;
-    width: 100px;
+.game-lose-image{
+    width:50%
 }
 .overlay {
     display: flex;
@@ -138,12 +144,21 @@
     background-color: rgba(0,0,0,0.5); /* Black background with opacity */
     z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
   }
-  .start-game-button{
-    height: 50px;
-    width: 150px;
-    border-radius: 50px;
-    border: none;
-    background-color: rgb(0, 132, 255);
+ .header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: cadetblue;
+    height: 40px;
     color: white;
-    font-size: 16px;
-  }
+    font-weight: bold;
+ }
+ .start-newgame-button{
+    margin-top: 20px;
+    padding: 12px;
+    font-size: 18px;
+    background: black;
+    color: white;
+    border-radius: 7px;
+    cursor: pointer;
+ }

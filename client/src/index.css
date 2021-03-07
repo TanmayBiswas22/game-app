@@ -7,3 +7,21 @@ body, input, button, a, textarea {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
 }
+.start-game-button {
+  margin-top: 20px;
+  padding: 24px 12px;
+  font-size: 28px;
+  background: #31a24c;
+  color: white;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 7px;
+  cursor: pointer;
+}
+.home{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
