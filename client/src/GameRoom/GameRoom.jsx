@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 
-import "./ChatRoom.css";
+import "./GameRoom.css";
 import useChat from "../useGame";
 import bot1 from "../assets/bot1.jpg";
 import bot2 from "../assets/bot2.png";
 import win_cup from "../assets/win_cup2.gif";
 import lose from "../assets/lose.gif";
-const ChatRoom = (props) => {
+const GameRoom = (props) => {
   const { gameData, sendGameData } = useChat('');
   let ownedByCurrentUser = false;
   const handleSendOption = (selectedOption) => {
@@ -89,4 +89,4 @@ const ChatRoom = (props) => {
   );
 };
 
-export default ChatRoom;
+export default GameRoom;

@@ -1,7 +1,7 @@
 import React from "react";
 import "./index.css";
 
-import ChatRoom from "./ChatRoom/ChatRoom";
+import GameRoom from "./GameRoom/GameRoom";
 
 function App() {
   const [newGame, setNewGame] = React.useState(false);

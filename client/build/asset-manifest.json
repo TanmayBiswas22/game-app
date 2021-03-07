@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.ffcae129.chunk.css",
+    "main.js": "/static/js/main.e934bafc.chunk.js",
+    "main.js.map": "/static/js/main.e934bafc.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.3618ac1b.js",
+    "runtime-main.js.map": "/static/js/runtime-main.3618ac1b.js.map",
+    "static/js/2.ee43dd17.chunk.js": "/static/js/2.ee43dd17.chunk.js",
+    "static/js/2.ee43dd17.chunk.js.map": "/static/js/2.ee43dd17.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.3db7fadc90939013859754c1804bc9c4.js": "/precache-manifest.3db7fadc90939013859754c1804bc9c4.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.ffcae129.chunk.css.map": "/static/css/main.ffcae129.chunk.css.map",
+    "static/js/2.ee43dd17.chunk.js.LICENSE.txt": "/static/js/2.ee43dd17.chunk.js.LICENSE.txt",
+    "static/media/bot1.jpg": "/static/media/bot1.40f44a4a.jpg",
+    "static/media/bot2.png": "/static/media/bot2.3f3af731.png",
+    "static/media/lose.gif": "/static/media/lose.7a513921.gif",
+    "static/media/win_cup2.gif": "/static/media/win_cup2.f866585f.gif"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.3618ac1b.js",
+    "static/js/2.ee43dd17.chunk.js",
+    "static/css/main.ffcae129.chunk.css",
+    "static/js/main.e934bafc.chunk.js"
+  ]
+}
