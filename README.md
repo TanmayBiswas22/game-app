@@ -2,9 +2,10 @@
 
 This repository contains the client and server side code for communication between two independent units using socket.io and React CRA  .
 - Client  Hosted by Netlify at - https://mygameapp.netlify.app/
-- Server Hosted by Heroku at - "https://ancient-tundra-88857.herokuapp.com/"
+- Server Hosted by Heroku at - https://ancient-tundra-88857.herokuapp.com/
 
 Live demo: https://mygameapp.netlify.app/
+*Note- You may face slight delay while starting the game and while getting the responses back from the server.This is because the Heroku server is located in US.
 
 
 # Prerequisites and dependencies
