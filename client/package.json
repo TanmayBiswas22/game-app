@@ -1,5 +1,5 @@
 {
-  "name": "socket.io-react-hooks-chat",
+  "name": "socket.io-react-hooks-game",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
