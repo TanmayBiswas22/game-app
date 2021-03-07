@@ -5,7 +5,8 @@ This repository contains the client and server side code for communication betwe
 - Server Hosted by Heroku at - https://ancient-tundra-88857.herokuapp.com/
 
 Live demo: https://mygameapp.netlify.app/
-*Note- You may face slight delay while starting the game and while getting the responses back from the server.This is because the Heroku server is located in US.
+
+- Note- You may face slight delay while starting the game and while getting the responses back from the server.This is because the Heroku server is located in US.
 
 
 # Prerequisites and dependencies
