@@ -5,8 +5,8 @@ const NEW_TURN = "turn";
 const GAME = "game";
 const WON = "won";
 const LOST = "lost";
-//const SOCKET_SERVER_URL = "https://ancient-tundra-88857.herokuapp.com/";
-const SOCKET_SERVER_URL = "http://localhost:4000";
+const SOCKET_SERVER_URL = "https://ancient-tundra-88857.herokuapp.com/";
+// const SOCKET_SERVER_URL = "http://localhost:4000";
 const useGame = (roomId) => {
   const [gameData, setGameData] = useState([]);
 
