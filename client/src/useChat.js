@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import socketIOClient from "socket.io-client";
 
 const NEW_TURN = "turn";
-const SOCKET_SERVER_URL = "http://localhost:4000";
+const SOCKET_SERVER_URL = "https://ancient-tundra-88857.herokuapp.com/";
 const startingNumber = 19;
 const useChat = (roomId) => {
   const [gameData, setGameData] = useState([]);

@@ -5,7 +5,7 @@ const io = require("socket.io")(server, {
   },
 });
 
-const PORT = 4000;
+const FALLBACK_PORT = 4000;
 const NEW_TURN = "turn";
 
 let gamesState = [];
@@ -156,6 +156,6 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
+server.listen(process.env.PORT || FALLBACK_PORT, () => {
+  console.log(`Listening on port ${FALLBACK_PORT}`);
 });
