@@ -7,7 +7,7 @@ This repository contains the client and server side code for communication betwe
 Live demo: https://mygameapp.netlify.app/
 
 
-# ## Prerequisites and dependencies
+# Prerequisites and dependencies
 
  - React v16+
  - socket.io-client v3+
