@@ -6,13 +6,14 @@ import Home from "./Home/Home";
 import ChatRoom from "./ChatRoom/ChatRoom";
 
 function App() {
+  const [newGame, setNewGame] = React.useState(false);
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/newgame" component={ChatRoom} />
-      </Switch>
-    </Router>
+    newGame ? <ChatRoom /> :
+    <div>
+      <button className="enter-room-button" onClick={() => setNewGame(true)}>
+        Start Game
+    </button>
+    </div>
   );
 }
 

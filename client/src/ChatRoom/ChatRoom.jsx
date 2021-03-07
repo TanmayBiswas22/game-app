@@ -7,8 +7,8 @@ import bot2 from "../assets/bot2.png";
 import win_cup from "../assets/win_cup.png";
 import balloons from "../assets/balloons.png";
 const ChatRoom = (props) => {
-  const { roomId } = props.match.params;
-  const { gameData, sendGameData } = useChat(roomId);
+  //const { roomId } = props.match.params;
+  const { gameData, sendGameData } = useChat('');
   const [ isButtonDisabled, setButtonDisabled ] = useState(false);
   useEffect(() => {
     //let lastAttemptByCurrentUser = gameData.attemps && gameData.attemps[gameData.attemps.length -1]?.ownedByCurrentUser ;
@@ -29,7 +29,12 @@ const ChatRoom = (props) => {
             
     setTimeout(function(){
       item.disabled = false;
-      item.style.backgroundColor = '#31a24c'
+      item.style.backgroundColor = '#31a24c';
+      // console.log('gamedata in settimeout',gameData)
+    //   if(gameData.attemps && gameData.attemps[gameData.attemps.length -1]?.ownedByCurrentUser){
+    //   sendGameData(null,true);
+    // }
+    // sendGameData(null,true);
     },5000);
   }
     sendGameData(selectedOption);

@@ -61,6 +61,10 @@ const useChat = (roomId) => {
       setGameData(incomingData);
     });
 
+    socketRef.current.on("game-over", (data) => {
+      console.log('game-over', data);
+alert('game over')
+    });
     console.log('socketref', socketRef);
     console.log('gameData inside listenre', gameData);
     return () => {
@@ -70,11 +74,22 @@ const useChat = (roomId) => {
 
 
 
-  const sendGameData = (selectedOption) => {
-    socketRef.current.emit(NEW_TURN, {
-      selectedOption: selectedOption,
-      gameData: gameData
-    });
+  const sendGameData = (selectedOption,autoTurn =false) => {
+    // if(autoTurn){
+    //     if(gameData.attemps && gameData.attemps[gameData.attemps.length -1]?.ownedByCurrentUser){
+    //       socketRef.current.emit("auto_turn", {
+    //         selectedOption: selectedOption,
+    //         gameData: gameData
+    //       });
+    // }
+      
+    // } else{
+      socketRef.current.emit(NEW_TURN, {
+        selectedOption: selectedOption,
+        gameData: gameData
+      });
+    // }
+
   };
 
   return { gameData, sendGameData };

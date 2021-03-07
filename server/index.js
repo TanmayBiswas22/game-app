@@ -30,7 +30,7 @@ const joinGame = (state, gameId, user) => {
   return [
     ...state.map((game) => {
       if (game.id === gameId) {
-        return { ...game, playerTwo: user, turn: user.id };
+        return { ...game, playerTwo: {id:user}, turn: user};
       } else {
         return game;
       }
@@ -39,7 +39,7 @@ const joinGame = (state, gameId, user) => {
 };
 
 const calculateValue = (value, number) => {
-  const newValue = Math.round((value + number) / 3);
+  const newValue = Math.floor((value + number) / 3);
   const isDivisible = (value + number) % 3 === 0;
 
   return {
@@ -48,6 +48,28 @@ const calculateValue = (value, number) => {
   };
 };
 
+const createGameData = (data,existingGame, newValue,userid) =>{
+  console.log('createGameData -->',data);
+  console.log('createGameData -->',existingGame);
+  console.log('createGameData -->',newValue);
+  console.log('createGameData -->',userid);
+  let currentGameData = {...existingGame};
+  let newAttempt = {
+    user: userid,
+    isPlayerOne: userid === currentGameData.playerOne.id,
+    number: data.selectedOption,
+    newValue: newValue.value,
+    oldValue: currentGameData.value,
+    text: `[(${data.selectedOption} + ${currentGameData.value}) / 3] = ${newValue.value}`,
+  }
+
+  currentGameData.attemps.push(newAttempt);
+  currentGameData.value = newValue.value;
+  currentGameData.winner = newValue.value === 1 ? userid : null;
+  currentGameData.gameOver = currentGameData.winner ? true : false
+  currentGameData.turn = userid;
+  return currentGameData
+}
 const findGame = (state, gameId) => {
   return state.find((game) => game.id === gameId);
 };
@@ -62,14 +84,16 @@ io.on("connection", (socket) => {
     (game) => game.playerTwo === null && game.winner === null
   );
 
-  console.log('startedGame', startedGame)
+  // console.log('startedGame', startedGame)
   if (!startedGame) {
     const game = createNewGame(socket.id);
     gamesState.push(game);
+    // console.log('gamesState after creating new game', gamesState)
     socket.join(game.id);
     io.to(game.id).emit("game", game);
   } else {
     gamesState = joinGame(gamesState, startedGame.id, socket.id);
+    // console.log('gamesState for alreday create game', gamesState)
     socket.join(startedGame.id);
 
     io.to(startedGame.id).emit(
@@ -80,25 +104,30 @@ io.on("connection", (socket) => {
 
   // Listen for new turn
   socket.on(NEW_TURN, (data) => {
-    console.log('turn data in server', data)
+    // console.log('turn data in server', data)
     let existingGame = data.gameData;
     //let previousAttempt = data.gameData.attemps[data.gameData.attemps.length -1]?.newValue
 
     const newValue = calculateValue(existingGame.value, data.selectedOption);
-    let newAttempt = {
-      user: socket.id,
-      isPlayerOne: socket.id === existingGame.playerOne.id,
-      number: data.selectedOption,
-      newValue: newValue.value,
-      oldValue: existingGame.value,
-      text: `[(${data.selectedOption} + ${existingGame.value}) / 3] = ${newValue.value}`,
-    }
+    const currentGameData = createGameData(data,existingGame,newValue,socket.id);
+    console.log('currentGameData', currentGameData)
+    io.in(existingGame.id).emit(NEW_TURN, currentGameData);
+    // setTimeout(function(){
+    //   console.log('setimeout --->existingGame', existingGame)
+    //   console.log('setimeout --->socket.id', socket.id)
+    //   if(existingGame.turn === socket.id){
+    //     console.log('inside iff of server setimeout');
+    //     let existingGame = data.gameData;
 
-    existingGame.attemps.push(newAttempt);
-    existingGame.value = newValue.value;
-    existingGame.winner = newValue.value === 1 ? socket.id : null;
-    existingGame.gameOver = existingGame.winner ? true : false
-    io.in(existingGame.id).emit(NEW_TURN, existingGame);
+    // const newValue = calculateValue(existingGame.value, [-1,0,1][Math.floor(Math.random() * 3)]);
+    // console.log('setimeout --->newValue',newValue);
+    // const nextTurnUserId = existingGame.playerOne.id === existingGame.turn ? existingGame.playerTwo.id : existingGame.playerOne.id;
+    // console.log('setimeout --->nextTurnUserId',nextTurnUserId);
+    // const currentGameData = createGameData(data,existingGame,newValue,nextTurnUserId);
+    // console.log('setimeout --->currentGameData',currentGameData);
+    // io.in(existingGame.id).emit(NEW_TURN, currentGameData);
+    // }
+    // },5000);
     if (newValue.value === 1) {
       io.to(socket.id).emit("won", existingGame);
      connectedUsers.forEach(userId => {
@@ -110,12 +139,19 @@ io.on("connection", (socket) => {
 
   });
 
+  socket.on("auto_turn", (data) => {
+    console.log('auto turn data in server', data)
+  });
   // Leave the room if the user closes the socket
   socket.on("disconnect", () => {
-    const index = connectedUsers.indexOf(socket.id);
-    if (index > -1) {
-      connectedUsers.splice(index, 1);
+    console.log(`Client ${socket.id} disconnected`);
+    const indexOfUser = connectedUsers.indexOf(socket.id);
+    if (indexOfUser > -1) {
+      connectedUsers.splice(indexOfUser, 1);
     }
+    //find game where the discosnnected user is either playerone or playertwo 
+    gamesState= gamesState.filter(item => (item.playerOne?.id !== socket.id && item.playerTwo?.id !== socket.id))
+
     socket.leave(gamesState.id);
   });
 });
