@@ -6,6 +6,7 @@ import bot1 from "../assets/bot1.jpg";
 import bot2 from "../assets/bot2.png";
 import win_cup from "../assets/win_cup2.gif";
 import lose from "../assets/lose.gif";
+import loading from "../assets/loading.gif";
 const GameRoom = (props) => {
   const { gameData, sendGameData } = useChat('');
   let ownedByCurrentUser = false;
@@ -15,7 +16,10 @@ const GameRoom = (props) => {
 
   useEffect(() => {
     var element = document.getElementById('game-container');
-    element.scrollTop = element.scrollHeight;
+    if(element){
+      element.scrollTop = element.scrollHeight;
+    }
+
   }, [gameData]);
   if (gameData.attemps && gameData.attemps.length > 0) {
     ownedByCurrentUser = gameData.attemps[gameData.attemps?.length - 1]?.ownedByCurrentUser;
@@ -24,6 +28,8 @@ const GameRoom = (props) => {
   return (
     <div className="game-room-container">
       <div className="header"> <h3>Game App</h3></div>
+      {gameData.startingNumber ?
+      <>
       <h3 className="game-name">Starting Number: {gameData.startingNumber}</h3>
       <div id="game-container" className="game-container">
         <ol className="game-data-list">
@@ -85,6 +91,11 @@ const GameRoom = (props) => {
           1
       </button>
       </div>
+    </> :
+     <div className="loading">
+     <img src={loading} alt="Loading"  /> 
+     </div>
+    }
     </div>
   );
 };

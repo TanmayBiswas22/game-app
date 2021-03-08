@@ -6,7 +6,7 @@ import GameRoom from "./GameRoom/GameRoom";
 function App() {
   const [newGame, setNewGame] = React.useState(false);
   return (
-    newGame ? <ChatRoom /> :
+    newGame ? <GameRoom /> :
     <div className="home">
       <button className="start-game-button" onClick={() => setNewGame(true)}>
         Start Game
